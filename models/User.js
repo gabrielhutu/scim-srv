@@ -1,5 +1,8 @@
 const mongodb = require("mongoose");
 const userSchema = new mongodb.Schema({
+    schemas: {
+        type: [String]
+    },
     firstName: {
         type: String
     }, 
