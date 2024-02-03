@@ -3,22 +3,22 @@ const app = express.Router();
 //User schema
 const user = require("../models/User");
 //The authorization module
-const sendUnauthorizedResponse = require("../authorization/authorization");
+const sendauthorizedResponse = require("../authorization/authorization");
 
 
 //GET all Users a.k.a Okta Import
 app.get("/Users",async (request, response) => {
 
 //Check if the authorization token provided is correct, if not bye bye :)
-    const unauthorized = await sendUnauthorizedResponse(response, request.header("authorization"));
-//the following applies to ALL methods that call sendUnauthorizedResponse
+    const authorized = await sendauthorizedResponse(response, request.header("authorization"));
+//the following applies to ALL methods that call sendauthorizedResponse
 
 // if the user is not authorized (a.k.a token is not correct), do not go further down, by removing this IF statement,  
 // the code will go in the try-catch statement and will try to send another 200 response, which will indefinetly crash the server 
-// on each incorrect token (since sendUnauthorizedResponse is already calling response.send)
+// on each incorrect token (since sendauthorizedResponse is already calling response.send)
     
 // to keep it short, make sure that this if statement stays here
-    if(!unauthorized){
+    if(!authorized){
         return;
     }
 
@@ -36,9 +36,9 @@ app.get("/Users",async (request, response) => {
 });
 //Get One User 
 app.get("/Users/:id", async (request, response) => {
-    const unauthorized = await sendUnauthorizedResponse(response, request.header("authorization"));
+    const authorized = await sendauthorizedResponse(response, request.header("authorization"));
 
-    if(!unauthorized){
+    if(!authorized){
         return;
     }
 
@@ -61,9 +61,9 @@ app.post("/Users", async (request, response) => {
         return;
     }
 
-    const unauthorized = await sendUnauthorizedResponse(response, request.header("authorization"));
+    const authorized = await sendauthorizedResponse(response, request.header("authorization"));
 
-    if(!unauthorized){
+    if(!authorized){
         return;
     }
 
@@ -79,9 +79,9 @@ app.post("/Users", async (request, response) => {
 });
 //TODO: Update One User
 app.patch("/Users/:id", async (request, response) => {
-    const unauthorized = await sendUnauthorizedResponse(response, request.header("authorization"));
+    const authorized = await sendauthorizedResponse(response, request.header("authorization"));
 
-    if(!unauthorized){
+    if(!authorized){
         return;
     }
 
@@ -90,9 +90,9 @@ app.patch("/Users/:id", async (request, response) => {
 //Delete One User
 app.delete("/Users/:id", async (request, response) => {
     
-    const unauthorized = await sendUnauthorizedResponse(response, request.header("authorization"));
+    const authorized = await sendauthorizedResponse(response, request.header("authorization"));
 
-    if(!unauthorized){
+    if(!authorized){
         return;
     }
 
