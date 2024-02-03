@@ -39,7 +39,7 @@ app.get("/Users/:id", async (request, response) => {
     }
 });
 //Create User a.k.a Assign Okta User to the App
-app.post("/Users", (request, response) => {
+app.post("/Users", async (request, response) => {
 
     if(request.header("content-type") != "Application/json"){
         response.status(400).send({
