@@ -1,0 +1,16 @@
+name: Greetings
+
+on: [pull_request_target, issues]
+
+jobs:
+  greeting:
+    runs-on: archlinux
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: "If the bug / issue found is disrupting the service of this project, please reach out to gabrielcristianhutu@gmail.com. Please leave a link to the issue in the email as well"
+        pr-message: "Thanks for joining, feel free to add any changes"
