@@ -13,6 +13,8 @@ const userSchema = new mongodb.Schema({
         type: String,
 //        required: true
     }
+}, {
+    collection: "users"
 });
 
 module.exports = mongodb.model("user", userSchema);

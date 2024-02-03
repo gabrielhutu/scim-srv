@@ -1,23 +1,11 @@
 const express = require('express');
-const mongodb = require('mongoose');
+const token = require("./models/tokens");
+
+require("./db");
 
 const port = 3000;
 const app = express();
-const dbServerIp = "localhost"
 
-//Connect to the DB
-
-mongodb.connect("mongodb://" + dbServerIp + "/scim");
-const db = mongodb.connection;
-db.on("error", (error) => {
-    //Throw any db init error
-    throw error;
-});
-
-db.once("open", () => {
-    //Inform the admin that the Server could connect to the database
-    console.log("Connected to the db successfully");
-});
 
 //Since this will act as an API and SCIM endpoint, we'll set up the middleware to parse JSON
 //The router to the SCIM endpoint
