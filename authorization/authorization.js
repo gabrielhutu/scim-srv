@@ -23,8 +23,9 @@ const sendUnauthorizedResponse = async (responseObject, tokenToCheck) => {
         await responseObject.status(401).send({
             "error": "Unauthorized"
         });
-        return;
+        return false;
     }
+    return true;
 }
 
 module.exports = authorize;

@@ -10,7 +10,17 @@ const sendUnauthorizedResponse = require("../authorization/authorization");
 app.get("/Users",async (request, response) => {
 
 //Check if the authorization token provided is correct, if not bye bye :)
-    await sendUnauthorizedResponse(response, request.header("authorization"));
+    const unauthorized = await sendUnauthorizedResponse(response, request.header("authorization"));
+//the following applies to ALL methods that call sendUnauthorizedResponse
+
+// if the user is not authorized (a.k.a token is not correct), do not go further down, by removing this IF statement,  
+// the code will go in the try-catch statement and will try to send another 200 response, which will indefinetly crash the server 
+// on each incorrect token (since sendUnauthorizedResponse is already calling response.send)
+    
+// to keep it short, make sure that this if statement stays here
+    if(!unauthorized){
+        return;
+    }
 
     //Read all users from the DB and send the output as a response
     try{
@@ -26,7 +36,11 @@ app.get("/Users",async (request, response) => {
 });
 //Get One User 
 app.get("/Users/:id", async (request, response) => {
-    await sendUnauthorizedResponse(response, request.header("authorization"));
+    const unauthorized = await sendUnauthorizedResponse(response, request.header("authorization"));
+
+    if(!unauthorized){
+        return;
+    }
 
     try {
         
@@ -40,7 +54,6 @@ app.get("/Users/:id", async (request, response) => {
 });
 //Create User a.k.a Assign Okta User to the App
 app.post("/Users", async (request, response) => {
-
     if(request.header("content-type") != "Application/json"){
         response.status(400).send({
             "error": "Only JSON data is allowed, make sure that the Content-type header is set to Application/json!"
@@ -48,12 +61,15 @@ app.post("/Users", async (request, response) => {
         return;
     }
 
-    await sendUnauthorizedResponse(response, request.header("authorization"));
+    const unauthorized = await sendUnauthorizedResponse(response, request.header("authorization"));
 
+    if(!unauthorized){
+        return;
+    }
 
     try{
             //Try to create a new user based on the imported model and save it in the database
-        response.status(201).send( new user(request.body).save());
+        response.status(201).send(await new user(request.body).save());
     }catch(err){
         //Or just throw a 400 :)
         response.status(400).send({
@@ -62,14 +78,23 @@ app.post("/Users", async (request, response) => {
     }
 });
 //TODO: Update One User
-app.patch("/Users/:id", (request, response) => {
-    
+app.patch("/Users/:id", async (request, response) => {
+    const unauthorized = await sendUnauthorizedResponse(response, request.header("authorization"));
+
+    if(!unauthorized){
+        return;
+    }
+
 });
 
 //Delete One User
 app.delete("/Users/:id", async (request, response) => {
     
-    await sendUnauthorizedResponse(response, request.header("authorization"));
+    const unauthorized = await sendUnauthorizedResponse(response, request.header("authorization"));
+
+    if(!unauthorized){
+        return;
+    }
 
     try {
          response.status(200).send( await user.deleteOne({_id: request.params.id}));
