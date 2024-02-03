@@ -63,5 +63,5 @@ A basic SCIM V2 server made using Express js and MongoDB
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/gabrielhutu/scim-srv/blob/main/LICENSE)
 
