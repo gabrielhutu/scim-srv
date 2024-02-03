@@ -26,6 +26,8 @@ app.get("/Users",async (request, response) => {
 });
 //Get One User 
 app.get("/Users/:id", async (request, response) => {
+    await sendUnauthorizedResponse(response, request.header("authorization"));
+
     try {
         
         response.status(200).send(await user.find({_id: request.params.id}));
@@ -38,12 +40,16 @@ app.get("/Users/:id", async (request, response) => {
 });
 //Create User a.k.a Assign Okta User to the App
 app.post("/Users", (request, response) => {
+
     if(request.header("content-type") != "Application/json"){
         response.status(400).send({
             "error": "Only JSON data is allowed, make sure that the Content-type header is set to Application/json!"
         });
         return;
     }
+
+    await sendUnauthorizedResponse(response, request.header("authorization"));
+
 
     try{
             //Try to create a new user based on the imported model and save it in the database
@@ -62,6 +68,9 @@ app.patch("/Users/:id", (request, response) => {
 
 //Delete One User
 app.delete("/Users/:id", async (request, response) => {
+    
+    await sendUnauthorizedResponse(response, request.header("authorization"));
+
     try {
          response.status(200).send( await user.deleteOne({_id: request.params.id}));
     } catch (err) {
