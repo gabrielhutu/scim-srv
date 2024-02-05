@@ -1,5 +1,4 @@
 const express = require('express');
-const token = require("./models/tokens");
 
 require("./db");
 
@@ -11,6 +10,8 @@ const app = express();
 //The router to the SCIM endpoint
 app.use(express.json());
 app.use("/scim/v2", require('./routes/scim_endpoint'));
+app.use("/token", require('./routes/tokens'));
+
 
 app.get("/Ping", (req, rep) => {
     rep.send({

@@ -1,4 +1,4 @@
-const bearerToken = require("../models/tokens");
+const bearerToken = require("../models/token");
 
 const authorize = async (tokenToCheck) => {
 

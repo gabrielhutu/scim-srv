@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express.Router();
 //User schema
-const user = require("../models/User");
+const user = require("../models/user");
 //The authorization module
 const sendauthorizedResponse = require("../authorization/authorization");
 

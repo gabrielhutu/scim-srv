@@ -9,7 +9,7 @@ const tokenSchema = new mongodb.Schema({
         type: Date,
         required: true
     },
-    expiratonDate: {
+    expirationDate: {
         type: Date,
         required: true
     }
