@@ -1,5 +1,5 @@
 const express = require('express');
-const sendauthorizedResponse = require("./authorization/authorization");
+const sendUnauthorizedResponse = require("./authorization/authorization");
 
 require("./db");
 
@@ -13,7 +13,7 @@ app.use(express.json());
 
 app.use(async (request, response, next) => {
     //Check if the authorization token provided is correct, if not bye bye :)
-    const authorized = await sendauthorizedResponse(response, request.header("authorization"));
+    const authorized = await sendUnauthorizedResponse(response, request.header("authorization"));
     //the following applies to ALL methods that call sendauthorizedResponse
 
     // if the user is not authorized (a.k.a token is not correct), do not go further down, by removing this IF statement,  

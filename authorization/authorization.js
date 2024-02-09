@@ -2,9 +2,7 @@ const bearerToken = require("../models/token");
 
 const authorize = async (tokenToCheck) => {
 
-    console.log("Incoming token: " + tokenToCheck.substr(7));
     localToken = (await bearerToken.findOne({token: tokenToCheck.substr(7)}));
-    console.log(localToken);
     if(localToken != null){
         return {
             isTokenValid: true,

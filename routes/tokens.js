@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express.Router();
-const sendauthorizedResponse = require("../authorization/authorization");
 const token = require("../models/token");
 const genRandomToken = require("random-token").create("abcdefghijklmnopqrstuvwxzyABCDEFGHIJKLMNOPQRSTUVWXZY0123456789-_");
 

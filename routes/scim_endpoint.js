@@ -2,8 +2,6 @@ const express = require('express');
 const app = express.Router();
 //User schema
 const user = require("../models/user");
-//The authorization module
-const sendauthorizedResponse = require("../authorization/authorization");
 
 
 //GET all Users a.k.a Okta Import
