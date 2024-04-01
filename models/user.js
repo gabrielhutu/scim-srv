@@ -1,7 +1,8 @@
 const mongodb = require("mongoose");
 const userSchema = new mongodb.Schema({
     schemas: {
-        type: [String]
+        type: [String],
+        value: ["urn:ietf:params:scim:schemas:core:2.0:User"]
     },
     firstName: {
         type: String
@@ -9,10 +10,17 @@ const userSchema = new mongodb.Schema({
     lastName: {
         type: String
     },
+    middleName: {
+        type: String
+    },
     email: {
         type: String,
 //        required: true
+    },
+    groups: {
+        type: String
     }
+
 }, {
     collection: "users"
 });

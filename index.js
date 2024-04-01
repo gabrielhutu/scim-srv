@@ -3,7 +3,7 @@ const sendUnauthorizedResponse = require("./authorization/authorization");
 
 require("./db");
 
-const port = 3000;
+const port = 8080;
 const app = express();
 
 
